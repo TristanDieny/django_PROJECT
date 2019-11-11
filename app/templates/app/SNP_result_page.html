@@ -1,0 +1,43 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<br>
+
+<section>
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+                <tr>
+                    <th>SNP ID CURRENT</th>
+                    <th>DISEASE TRAIT</th>
+                    <th>CHR ID</th>
+                    <th>CHR POS</th>
+                    <th>SNPS</th>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0" id="myTable">
+            <tbody>
+                {% for snp in requete %}
+                <tr>
+                    <td><a href="{% url 'SNP_detail_page' snp.SNP_ID %}" target="_blank">{{snp.SNP_ID_CURRENT}}</a></td>
+                    <td><a href="{% url 'phenotype_detail_page' snp.PHENOTYPE_ID %}">{{snp.DISEASE_TRAIT}}</a></td>
+                    <td>{{snp.CHR_ID}}</td>
+                    <td>{{snp.CHR_POS}}</td>
+                    <td>{{snp.SNPS}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
+
+

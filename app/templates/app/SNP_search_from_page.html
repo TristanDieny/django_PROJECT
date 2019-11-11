@@ -1,0 +1,104 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+<br>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Recherche de SNPs li&eacute; &agrave; une maladie:</h3>
+        <p>
+            Permet de trouver tout les SNPs associ&eacute; &agrave; un ph&eacute;notype...
+            <br>
+            <br>
+            <select class="select" id="shearch">
+                <option value="0" hidden selected> S&eacute;l&eacute;ctionner un ph&eacute;notype</option>
+                {% for phe in PHENOTYPE %}
+                <option value={{phe.DISEASE_TRAIT}}>{{phe.DISEASE_TRAIT}}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p><a id="recherche1" class="btn btn-primary btn-large">rechercher &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h3>Recherche de SNPs par chromosome </h3>
+        <p>
+            Permet de trouver tout les SNPs associ&eacute; &agrave; un chromosome...
+            <br>
+            <br>
+            <select class="select" id="shearch2">
+                <option value="0" disabled hidden selected> S&eacute;l&eacute;ctionner un chromosome</option>
+                {% for chrID in CHR %}
+                <option value={{chrID.CHR_ID}}>{{chrID.CHR_ID}}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p><a id="recherche2" class="btn btn-primary btn-large">rechercher &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h3>Recherche de SNPs par identifiant </h3>
+        <p>
+            Permet de trouver un SNP vuia son identifiant... <br> (ex: 1101999)<br>
+        </p>
+
+        <input type="text" id="shearch3" placeholder="entrez un identifiant ...">
+        <br><br>
+        <p><a id="recherche3" class="btn btn-primary btn-large">rechercher &raquo;</a></p>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>-->
+
+<script>
+    // Recherche 1:
+    $("#recherche1").click(function () {
+        var selected = $("#shearch option:selected").text();
+        if ($("#shearch option:selected").val() == "0") {
+            alert("merci de selectionner un phenotype");
+        }
+        else {
+            var link = "{% url 'SNP_result_page' 9 1 %}";
+            link = link.replace('9', selected);
+            window.open(link, '_blank');
+        }
+    });
+
+    // Recherche 2:
+    $("#recherche2").click(function () {
+        if ($("#shearch2 option:selected").val() == 0) {
+            alert("merci de selectionner un chromosome");
+        }
+        else {
+            var selected = $("#shearch2 option:selected").text();
+            var link = "{% url 'SNP_result_page' 9 2 %}";
+            link = link.replace('9', selected);
+            window.open(link, '_blank');
+        }
+
+    });
+
+    // Recherche 3:
+    $("#recherche3").click(function () {
+        var selected = document.getElementById("shearch3").value;
+        if (document.getElementById("shearch3").value == "") {
+            alert("merci d'entrer un identifiant");
+        }
+        else {
+            var link = "{% url 'SNP_result_page' 9 3 %}";
+            link = link.replace('9', selected);
+            window.open(link, '_blank');
+        }
+    });
+
+    tri("shearch")
+    sort("shearch")
+    tri("shearch2")
+    sort("shearch2")
+
+    document.getElementById("shearch2").selectedIndex = 1;
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<p>Une p-value "None" signifie une erreur lors de la r&eacute;cup&eacute;ration des donn&eacute;es.</p>
+
+<section>
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+                <tr>
+                    <th>SNP ID CURRENT</th>
+                    <th>DISEASE TRAIT</th>
+                    <th>CHR ID</th>
+                    <th>CHR POS</th>
+                    <th>SNPS</th>
+                    <th>PVALUE</th>
+                    <th>PVALUE LOG</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0" id="myTable">
+            <tbody>
+                {% for snp in requete %}
+                    {% if snp.SNP_ID ==  snp_ID  %}
+                        <tr>
+                            <td>{{snp.SNP_ID_CURRENT}}</td>
+                             <td><a href="{% url 'phenotype_detail_page' snp.PHENOTYPE_ID %}">{{snp.DISEASE_TRAIT}}</a></td>
+                            <td>{{snp.CHR_ID}}</td>
+                            <td>{{snp.CHR_POS}}</td>
+                            <td>{{snp.SNPS}}</td>
+                            <td>{{snp.PVALUE}}</td>
+                            <td>{{snp.PVALUE_MLOG}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
+
+

@@ -1,0 +1,70 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}:</h2>
+<br>
+<body>
+
+    <select class="select" onchange="recherche()" id="shearch">
+        <option value=" " disabled selected hidden> S&eacute;l&eacute;ctionner un ph&eacute;notype</option>
+        {% for phe in PHENOTYPE %}
+        <option value={{phe.PHENOTYPE_ID}}>{{phe.DISEASE_TRAIT}}</option>
+        {% endfor %}
+    </select>
+
+    <section>
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                    <tr>
+                        <th>DISEASE TRAIT</th>
+                        <th>FIRST AUTHOR</th>
+                        <th>DATE</th>
+                        <th>JOURNAL</th>
+                        <th>STUDY</th>
+                        <th>SNP ID</th>
+                        <th>LIEN VERS L'ARTICLE</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0" id="myTable">
+                <tbody>
+                    {% for ref in REFERENCE %}
+                    <tr>
+                        <td>{{ref.DISEASE_TRAIT}}</td>
+                        <td>{{ref.FIRST_AUTHOR}}</td>
+                        <td>{{ref.DATE}}</td>
+                        <td>{{ref.JOURNAL}}</td>
+                        <td>{{ref.STUDY}}</td>
+                        <td><a href="{% url 'SNP_detail_page' ref.SNP_ID %}" target="_blank">{{ref.SNP_ID_CURRENT}}</a></td>
+                        <td><a href="{{ref.LINK}}" target="_blank">lien</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script>        
+    sort("shearch"); 
+    tri("shearch");
+    $('#shearch option[value={{ maladieID }}]').attr('selected', 'selected');   
+
+    if ('{{ maladieID}}' != 0) {
+        recherche();
+    }
+</script>
+
+{% endblock %}

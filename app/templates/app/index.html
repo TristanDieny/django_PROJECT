@@ -1,0 +1,25 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Bienvenue</h1>
+    <p class="lead">Voici un site simple permettant d'effectuer des recherches sur des SNPs ou des traits ph&eacute;notypique associ&eacute; pr&eacute;sent dans une base de donn&eacute;es.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Phenotype List Page</h2>
+        <p>
+            Liste des ph&eacute;notype de r&eacute;f&eacute;rence, pr&eacute;sent dans notre base de donn&eacute;es...
+        </p>
+        <p><a class="btn btn-primary btn-large" href="{% url 'phenotype_list_page' %}">acc&eacute;der &raquo;</a></p>
+    </div>
+    <div class="col-md-6">
+        <h2>Recherche de SNPs </h2>
+        <p>Acceder &agrave; un formulaire permettant de rechercher un SNPs d'int&ecirc;ret.</p>
+        <p><a class="btn btn-primary btn-large" href="{% url 'SNP_search_from_page' %}">acc&eacute;der &raquo;</a></p>
+    </div>
+</div>
+
+{% endblock %}
